@@ -166,7 +166,8 @@ VelodyneDriver::VelodyneDriver(ros::NodeHandle node,
   ROS_INFO("expected frequency: %.3f (Hz)", diag_freq);
 
   using namespace diagnostic_updater;
-  diag_topic_.reset(new TopicDiagnostic("velodyne_packets", diagnostics_,
+  std::string packet_topic = config_.frame_id + "_packets";
+  diag_topic_.reset(new TopicDiagnostic(packet_topic, diagnostics_,
                                         FrequencyStatusParam(&diag_min_freq_,
                                                              &diag_max_freq_,
                                                              0.1, 10),
@@ -190,7 +191,7 @@ VelodyneDriver::VelodyneDriver(ros::NodeHandle node,
 
   // raw packet output topic
   output_ =
-    node.advertise<velodyne_msgs::VelodyneScan>("velodyne_packets", 10);
+    node.advertise<velodyne_msgs::VelodyneScan>(packet_topic, 10);
 
   last_azimuth_ = -1;
 }
