@@ -42,11 +42,11 @@ namespace velodyne_pointcloud
       ROS_ERROR_STREAM("Could not load calibration file!");
     }
 
-    std::string frame_id = "velodyne";
-    private_nh.param("frame_id", frame_id, std::string("velodyne"));
+    std::string nodes_prefix("velodyne");
+    private_nh.param("nodes_prefix", nodes_prefix, std::string("velodyne"));
 
     // advertise output point cloud (before subscribing to input data) 
-    std::string points_topic = frame_id + "_points";
+    std::string points_topic = nodes_prefix + "_points";
     output_ = node.advertise<sensor_msgs::PointCloud2>(points_topic, 10);
 
     srv_ = boost::make_shared<dynamic_reconfigure::Server<TransformNodeCfg>> (private_nh);
@@ -54,7 +54,7 @@ namespace velodyne_pointcloud
     f = boost::bind (&Transform::reconfigure_callback, this, _1, _2);
     srv_->setCallback (f);
 
-    std::string packet_topic = frame_id + "_packets";
+    std::string packet_topic = nodes_prefix + "_packets";
     velodyne_scan_ = node.subscribe(packet_topic, 10, &Transform::processScan, this);
 
     // Diagnostics

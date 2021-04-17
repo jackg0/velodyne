@@ -4,6 +4,7 @@
 <launch>
   <arg name="model" default="" />
   <arg name="calibration" default="" />
+  <arg name="nodes_prefix" default="velodyne" />
   <arg name="frame_id" default="velodyne" />
   <arg name="fixed_frame" default="" />
   <arg name="target_frame" default="" />
@@ -15,6 +16,7 @@
         args="load velodyne_pointcloud/TransformNodelet $(arg manager)" >
     <param name="model" value="$(arg model)"/>
     <param name="calibration" value="$(arg calibration)"/>
+    <param name="nodes_prefix" value="$(arg nodes_prefix)" />
     <param name="frame_id" value="$(arg frame_id)"/>
     <param name="fixed_frame" value="$(arg fixed_frame)"/>
     <param name="target_frame" value="$(arg target_frame)"/>

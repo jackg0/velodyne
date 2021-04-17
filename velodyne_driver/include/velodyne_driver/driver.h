@@ -69,6 +69,7 @@ private:
   // configuration parameters
   struct
   {
+    std::string nodes_prefix;        // prefix for manager, topics
     std::string frame_id;            // tf frame ID
     std::string model;               // device model name
     int    npackets;                 // number of packets to collect
